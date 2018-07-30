@@ -14888,7 +14888,7 @@ function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
  var ieVersion = detectIE();
  var scaleFixFactor = 1;
  if (ieVersion) {
-  scaleFixFactor = ieVersion === 11 && isInIframe() ? 0.82 : 0.92;
+  scaleFixFactor = ieVersion === 11 && isInIframe() ? 0.8 : 0.92;
  }
  var width = Math.floor(size.width * CSS_UNITS * scaleFixFactor) + 'px';
  var height = Math.floor(size.height * CSS_UNITS * scaleFixFactor) + 'px';
