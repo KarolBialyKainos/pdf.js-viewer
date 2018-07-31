@@ -14856,15 +14856,6 @@ function detectIE() {
   // other browser
   return false;
 }
-// Kainos edit Related with bug https://github.com/mozilla/pdf.js/issues/9919
-// PDF renderer embedded in iframe adds additional margins so scaleFactor must be lower than in normal version
-function isInIframe () {
-  try {
-      return window.self !== window.top;
-  } catch (e) {
-      return true;
-  }
-}
 
 var uiUtils = __webpack_require__(0);
 var overlayManager = __webpack_require__(4);
@@ -14882,14 +14873,10 @@ function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
  scratchCanvas.width = Math.floor(size.width * PRINT_UNITS);
  scratchCanvas.height = Math.floor(size.height * PRINT_UNITS);
  // KAINOS edit: Related with bug https://github.com/mozilla/pdf.js/issues/9919
- // Added 0.92 scale factor to match canvas image to print viewport
- // Scale factor must be lower for IE11 embedded in iframe
+ // Added 0.94 scale factor to match canvas image to print viewport
  // Issue occurs only in IE11 and MS Edge
- var ieVersion = detectIE();
- var scaleFixFactor = 1;
- if (ieVersion) {
-  scaleFixFactor = ieVersion === 11 && isInIframe() ? 0.8 : 0.92;
- }
+ var scaleFixFactor = detectIE() ? 0.94 : 1;
+
  var width = Math.floor(size.width * CSS_UNITS * scaleFixFactor) + 'px';
  var height = Math.floor(size.height * CSS_UNITS * scaleFixFactor) + 'px';
  var ctx = scratchCanvas.getContext('2d');
